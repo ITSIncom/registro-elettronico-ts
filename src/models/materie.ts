@@ -1,6 +1,6 @@
 import { limitedPrompt, strictPrompt } from "../utils";
 
-interface Materia
+export interface Materia
 {
     nome: string;
     professore: string;
@@ -12,12 +12,7 @@ const MATERIE: Materia[] = [
     { nome: "Informatica", professore: "Matteo Bilotta" }
 ];
 
-function promptMateria(messaggio: string): number
-{
-    return limitedPrompt(messaggio, 1, MATERIE.length) - 1;
-}
-
-export function visualizzaMaterie(): void
+function componiOutput(): string
 {
     let output = "";
 
@@ -25,10 +20,27 @@ export function visualizzaMaterie(): void
     {
         const materia = MATERIE[i];
 
-        output += `${i + 1}. ${materia.nome} (${materia.professore})\n`;
+        output += `${i + 1}. ${materia.nome} del prof. ${materia.professore}\n`;
     }
 
-    alert(output);
+    return output;
+}
+
+function promptMateria(messaggio: string): number
+{
+    return limitedPrompt(messaggio, 1, MATERIE.length) - 1;
+}
+export function getMateria(messaggio: string): Materia
+{
+    messaggio += "\n" + componiOutput();
+
+    const indice = promptMateria(messaggio);
+    return MATERIE[indice];
+}
+
+export function visualizzaMaterie(): void
+{
+    alert(componiOutput());
 }
 export function aggiungiMateria(): void
 {
@@ -42,7 +54,7 @@ export function modificaMateria(): void
     const indice = promptMateria("Quale materia vuoi modificare?");
 
     const nome = strictPrompt("Inserisci il nuovo nome della materia:");
-    const professore = strictPrompt("Inserisci il nuvoo nome del prof.:");
+    const professore = strictPrompt("Inserisci il nuovo nome del prof.:");
 
     MATERIE[indice] = { nome, professore };
 }
