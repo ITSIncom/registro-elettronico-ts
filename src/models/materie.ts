@@ -35,11 +35,23 @@ export function aggiungiMateria(): void
         professore: professoreMateria
     });
 }
-function modificaMateria(): void
+export function modificaMateria(): void
 {
-    // TODO!
+    const indice = Number(prompt("Quale materia vuoi modificare?")) - 1;
+
+    const nomeMateria = strictPrompt("Inserisci il nuovo nome della materia:");
+    const professoreMateria = strictPrompt("Inserisci il nuvoo nome del prof.:");
+
+    MATERIE[indice] = {
+        nome: nomeMateria,
+        professore: professoreMateria
+    };
 }
-function eliminaMateria(): void
+export function eliminaMateria(): void
 {
-    // TODO!
+    const indice = Number(prompt("Quale materia vuoi eliminare?")) - 1;
+    const ultimo = MATERIE.length - 1;
+
+    MATERIE[indice] = MATERIE[ultimo];
+    MATERIE.pop();
 }
