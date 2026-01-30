@@ -1,4 +1,4 @@
-import { strictPrompt } from "../utils";
+import { limitedPrompt, strictPrompt } from "../utils";
 
 interface Materia
 {
@@ -11,6 +11,11 @@ const MATERIE: Materia[] = [
     { nome: "Italiano", professore: "Luigi Verdi" },
     { nome: "Informatica", professore: "Matteo Bilotta" }
 ];
+
+function promptMateria(messaggio: string): number
+{
+    return limitedPrompt(messaggio, 1, MATERIE.length) - 1;
+}
 
 export function visualizzaMaterie(): void
 {
@@ -27,29 +32,23 @@ export function visualizzaMaterie(): void
 }
 export function aggiungiMateria(): void
 {
-    const nomeMateria = strictPrompt("Inserisci il nome della materia:");
-    const professoreMateria = strictPrompt("Inserisci il nome del prof.:");
+    const nome = strictPrompt("Inserisci il nome della materia:");
+    const professore = strictPrompt("Inserisci il nome del prof.:");
 
-    MATERIE.push({
-        nome: nomeMateria,
-        professore: professoreMateria
-    });
+    MATERIE.push({ nome, professore });
 }
 export function modificaMateria(): void
 {
-    const indice = Number(prompt("Quale materia vuoi modificare?")) - 1;
+    const indice = promptMateria("Quale materia vuoi modificare?");
 
-    const nomeMateria = strictPrompt("Inserisci il nuovo nome della materia:");
-    const professoreMateria = strictPrompt("Inserisci il nuvoo nome del prof.:");
+    const nome = strictPrompt("Inserisci il nuovo nome della materia:");
+    const professore = strictPrompt("Inserisci il nuvoo nome del prof.:");
 
-    MATERIE[indice] = {
-        nome: nomeMateria,
-        professore: professoreMateria
-    };
+    MATERIE[indice] = { nome, professore };
 }
 export function eliminaMateria(): void
 {
-    const indice = Number(prompt("Quale materia vuoi eliminare?")) - 1;
+    const indice = promptMateria("Quale materia vuoi eliminare?");
     const ultimo = MATERIE.length - 1;
 
     MATERIE[indice] = MATERIE[ultimo];
